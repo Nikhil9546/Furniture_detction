@@ -39,18 +39,20 @@ def draw_boxes_on_image(image):
     img = np.array(image)
     obj = {0: 'L-shaped-couch', 1: 'coffe-table', 2: 'coffee-table', 3: 'drawer',
            4: 'night-stand', 5: 'single-bed', 6: 'tv-cabinet', 7: 'wardrobe'}
-    res = model(source=img, imgsz=320, conf=0.15, hide_conf=True, augment=True)
-    for i in range(len(res[0].boxes.xyxy)):
-        coords = res[0].boxes.xyxy[i]
-        print(coords)
-        cls = res[0].boxes.cls[i]
-        name = obj[int(cls)]
-        final = cv2.rectangle(img, (int(coords[0]), int(
-            coords[1])), (int(coords[2]), int(coords[3])), (0, 255, 0), 2)
-        final = cv2.putText(final, name, (int(coords[0]), int(
-            coords[1])-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255, 255), 2)
+    res = model(source=img, imgsz=320, conf=0.45, hide_conf=True, augment=True)
+    try:
+        for i in range(len(res[0].boxes.xyxy)):
+            coords = res[0].boxes.xyxy[i]
+            cls = res[0].boxes.cls[i]
+            name = obj[int(cls)]
+            final = cv2.rectangle(img, (int(coords[0]), int(
+                coords[1])), (int(coords[2]), int(coords[3])), (0, 0, 255), 2)
+            final = cv2.putText(final, name, (int(coords[0]), int(
+                coords[1])-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0, 255), 2)
 
-    return final
+        return final
+    except:
+        return "No Object Present"
 
 
 if __name__ == "__main__":
