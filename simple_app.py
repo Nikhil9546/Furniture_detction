@@ -42,7 +42,7 @@ def draw_boxes_on_image(image):
     obj = {0: 'L-shaped-couch', 1: 'coffe-table', 2: 'coffee-table', 3: 'drawer',
            4: 'night-stand', 5: 'single-bed', 6: 'tv-cabinet', 7: 'wardrobe'}
     res = model(source=image, imgsz=320, conf=0.45, hide_conf=True, augment=True)
-    img = cv2.imread(image)
+    img = np.array(image)
     try:
         for i in range(len(res[0].boxes.xyxy)):
             coords = res[0].boxes.xyxy[i]
