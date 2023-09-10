@@ -31,8 +31,11 @@ def main():
             annotated_img = draw_boxes_on_image(img)
 
             # Display the annotated image
-            st.image(annotated_img, caption="Processed Image",
-                     use_column_width=True)
+            if annotated_img is not None:
+                st.image(annotated_img, caption="Processed Image",
+                         use_column_width=True)
+            else:
+                st.write("No objects found in the image.")
 
 
 def draw_boxes_on_image(image):
@@ -52,7 +55,7 @@ def draw_boxes_on_image(image):
 
         return final
     except:
-        return "No Object Present"
+        return None
 
 
 if __name__ == "__main__":
